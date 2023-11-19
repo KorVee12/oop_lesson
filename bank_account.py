@@ -15,10 +15,16 @@ class AccountDB:
                 return i
         return -1
 
-    def search_public(self, account_num):
+    def search_public(self, account_num="0010"):
+        check_account = True
         for account in self.account_database:
             if account.account_number == account_num:
                 return account
+            else:
+                check_account = False
+
+        if check_account == False:
+            raise ValueError(f"{account_num} is not in our bank account.")
         return None
 
     def delete(self, account):
@@ -70,14 +76,14 @@ if __name__ == "__main__":
     my_account_DB.insert(account1)
     my_account_DB.insert(account2)
     my_account_DB.insert(account3)
-    my_account_DB.insert(account4)
-    my_account_DB.insert(account5)
+    # my_account_DB.insert(account4)
+    # my_account_DB.insert(account5)
+    # print(my_account_DB)
+    # my_account_DB.delete(account1)
+    # print(my_account_DB)
+    my_account_DB.search_public("0003").deposit(50)
     print(my_account_DB)
-    my_account_DB.delete(account1)
+    my_account_DB.search_public("0003").withdraw(100)
     print(my_account_DB)
-    # my_account_DB.search_public("0003").deposit(50)
-    # print(my_account_DB)
-    # my_account_DB.search_public("0003").withdraw(100)
-    # print(my_account_DB)
-    # my_account_DB.search_public("0010").deposit(50)
-    # print(my_account_DB)
+    my_account_DB.search_public("0010").deposit(50)
+    print(my_account_DB)
