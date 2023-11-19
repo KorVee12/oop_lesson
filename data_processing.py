@@ -83,21 +83,38 @@ my_DB.insert(table2)
 my_table1 = my_DB.search("cities")
 my_table1_filtered = my_table1.filter(lambda x: x["country"] == "Italy")
 my_table1_selected = my_table1.select(["city", "latitude"])
-print(my_table1)
-print()
-print(my_table1_selected)
+# print(my_table1)
+# print()
+# print(my_table1_selected)
 
-temps = []
-for item in my_table1_filtered.table:
-    temps.append(float(item["temperature"]))
-print(sum(temps) / len(temps))
-print("Using aggregation")
-print(my_table1_filtered.aggregate(lambda x: sum(x) / len(x), "temperature"))
+# temps = []
+# for item in my_table1_filtered.table:
+#     temps.append(float(item["temperature"]))
+# print(sum(temps) / len(temps))
+# print("Using aggregation")
+# print(my_table1_filtered.aggregate(lambda x: sum(x) / len(x), "temperature"))
 
-print()
+# print()
+# my_table2 = my_DB.search("countries")
+# my_table3 = my_table1.join(my_table2, "country")
+# my_table3_filtered = my_table3.filter(lambda x: x["EU"] == "no").filter(
+#     lambda x: float(x["temperature"]) < 5.0
+# )
+# print(my_table3_filtered.table)
+
 my_table2 = my_DB.search("countries")
-my_table3 = my_table1.join(my_table2, "country")
-my_table3_filtered = my_table3.filter(lambda x: x["EU"] == "no").filter(
-    lambda x: float(x["temperature"]) < 5.0
+my_table4 = my_table1.join(my_table2, "country")
+my_table4_filtered = my_table4.filter(lambda x: x["EU"] == "yes").filter(
+    lambda x: x["coastline"] == "no"
 )
-print(my_table3_filtered.table)
+temps = []
+for item in my_table4_filtered.table:
+    temps.append(float(item["temperature"]))
+print(f"Max temperature is {max(temps)}")
+print(f"Min temperature is {min(temps)}")
+
+latitudes = []
+for item in my_table4_filtered.table:
+    latitudes.append(float(item["latitude"]))
+print(f"Max latitude is {max(latitudes)}")
+print(f"Min latitude is {min(latitudes)}")
